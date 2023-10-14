@@ -9,9 +9,11 @@ const userSchema = new Schema({
     type: String,
     required: true
   },
+  name: {
+    type: String,
+    required: true
+  }
 });
 
 // module.exports = mongoose.model('User', userSchema);
-let User = mongoose.model('User', userSchema);
-
-export default User;
+export default User = mongoose.model('User', userSchema);
