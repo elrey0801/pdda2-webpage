@@ -43,8 +43,8 @@ const workingElementSchema = new Schema({
         default: null
     },
     creator: {
-        type: Object,
-        required: String
+        type: String,
+        require: true
     }
 });
 
