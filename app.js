@@ -3,6 +3,7 @@ import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
 import connectMongo from './configs/connectMongo.js';
 import authRoutes from './routes/auth.js'
+import pageRoutes from './routes/webpage.js';
 // import cors from 'cors';
 
 
@@ -29,6 +30,7 @@ const port = process.env.PORT;
 const host = process.env.HOST;
 
 app.use(authRoutes);
+app.use(pageRoutes);
 
 app.listen(port, host, () => {
   console.log(`App is running on port ${port} of ${host}`);

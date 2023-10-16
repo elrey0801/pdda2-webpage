@@ -1,6 +1,9 @@
-
-let getHome = (req, res) => {
+let getHome =  (req, res) => {
     res.render('home.ejs');
 }
 
-export default getHome;
+let getPostLogIn =  (req, res) => {
+    res.redirect('/');
+}
+
+export default { getHome, getPostLogIn };

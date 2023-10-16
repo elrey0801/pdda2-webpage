@@ -22,7 +22,7 @@ async function login(event) {
         response = await response.json();
         console.log(response);
         const red = {
-                method: 'GET',
+                method: 'POST',
                 headers: {
                         'Content-type': 'application/json'
                 },
@@ -30,5 +30,5 @@ async function login(event) {
                         username: username
                 })
         };
-        response = await fetch(HOST + '/', options);
+        response = await fetch(HOST + '/post-login', red);
 }
