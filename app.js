@@ -1,8 +1,7 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-import mongoose from 'mongoose';
-import e from 'express';
 import dotenv from 'dotenv';
+import connectMongo from './configs/connectMongo.js';
 dotenv.config();
 
 const app = express();
@@ -19,15 +18,7 @@ app.use((req, res, next) => {
   next();
 });
 
-import User from './models/user.js';
-mongoose.connect('mongodb://127.0.0.1:27017/pdda2')
-  .then(() => {
-    console.log("Connected to mongodb server");
-    const user = new User({ _id: 'root', password: 'root', name: 'root' });
-    user.save();
-  })
-  .catch(err => console.log(err));
-
+connectMongo();
 const port = process.env.PORT;
 const host = process.env.HOST;
 app.listen(port, host, () => {
