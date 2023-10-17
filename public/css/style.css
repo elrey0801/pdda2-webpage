@@ -1,0 +1,144 @@
+h1 {
+    font-size: 70px;
+    font-weight: 600;
+    /* background-image: linear-gradient(to right, #8ee1e7 15%, #648880 25%, #293f50); */
+    background: -webkit-linear-gradient(#eee, #368a7c);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    border: 1.5px solid #368a7c;
+    text-align: center;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.topnav {
+    overflow: hidden;
+    background-color: #333;
+}
+
+.topnav a {
+    float: left;
+    color: #f2f2f2;
+    text-align: center;
+    vertical-align: middle;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+}
+
+.topnav a:hover {
+    background-color: #ddd;
+    color: black;
+}
+
+.topnav a.active {
+    background-color: #04AA6D;
+    color: white;
+}
+
+.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+}
+
+.create-group-container,
+.date-list-container {
+    padding: 15px;
+}
+
+.create-group-container label {
+    display: block;
+}
+
+.create-group-container .btn-submit {
+    margin-top: 15px;
+    cursor: pointer;
+}
+
+.upload-file-container {
+    padding: 15px;
+}
+
+.upload-file-container label {
+    display: block;
+}
+
+
+
+/* create 2 columns layout */
+.column {
+    float: left;
+    width: 50%;
+}
+
+/* Clear floats after the columns */
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.button {
+    background-color: #2e6fcf;
+    /* Green */
+    color: white;
+    padding: .1rem 1rem;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
+
+.button-table {
+    background-color: #2e6fcf;
+    /* Green */
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    padding: 2px;
+    width: calc(50% - 4px);
+}
+
+.div-table {
+    display: flex;
+    justify-content: space-around;
+}
+
+.button:hover,
+.button-table:hover {
+    background-color: #ddd;
+    color: black;
+}
+
+.logout-button {
+    background-color: #066cf1;
+    /* Green */
+    border: none;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+    cursor: pointer;
+}
+
+.logout-button:hover {
+    background-color: #ddd;
+    color: black;
+}
+
+.userdisplay {
+    background-color: #04AA6D;
+}
+
+td th {
+    text-align: center;
+}

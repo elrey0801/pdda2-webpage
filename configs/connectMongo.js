@@ -13,8 +13,6 @@ async function connectMongo() {
     // let password = await bcrypt.hash('root', 12)
     // const user = new User({ _id: 'root', password: password, name: 'root' });
     // user.save();
-    const work = new WorkingElement({groupID: '10', creator: 'root'});
-    work.save();
 }
 
 export default connectMongo;

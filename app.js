@@ -6,6 +6,12 @@ import authRoutes from './routes/auth.js'
 import pageRoutes from './routes/webpage.js';
 // import cors from 'cors';
 
+import flash from 'express-flash';
+import session from 'express-session';
+import passport from 'passport';
+import initializePassport from './configs/passport-config.js';
+import methodOverride from 'method-override';
+
 
 dotenv.config();
 
@@ -28,6 +34,32 @@ app.use((req, res, next) => {
 connectMongo();
 const port = process.env.PORT;
 const host = process.env.HOST;
+
+// Authentication
+app.use(flash());
+app.use(session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(methodOverride('_method'));
+
+import User from './models/user.js';
+initializePassport(
+  passport,
+
+  // have to modify to get data from DB
+  async function getUserName(username) {
+      return await User.find({ _id : username });
+  },
+  async function getId(id) {
+      //return await pool.execute('SELECT * FROM `users` WHERE id = ?', [id]);
+      return await User.find({ _id : id });
+  }
+);
+
 
 app.use(authRoutes);
 app.use(pageRoutes);

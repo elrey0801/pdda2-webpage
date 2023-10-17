@@ -1,18 +1,23 @@
-<%- include('../includes/head.ejs') %>
-    <link rel="stylesheet" href="/css/forms.css">
-    <link rel="stylesheet" href="/css/auth.css">
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/css/login-signup.css">
+    <title>PĐĐ A2</title>
 </head>
+<h1>Login</h1>
 
-<body>
-   <%- include('../includes/navigation.ejs') %>
+            <form action="/login" method="post">
+                <div class="container">
+                    <label for="username"><b>Username</b></label>
+                    <input type="text" placeholder="Enter Username" name="username" id="username" required>
 
-    <main>
-        <form id="login-form" class="login-form" action="/login" method="POST">
-            <!-- <div class="form-control">
-                <label for="password">Password</label>
-                <input type="password" name="password" id="password">
-            </div> -->
-            <script src="/js/login.js"></script>
-        </form>
-    </main>
-<%- include('../includes/end.ejs') %>
+                    <label for="password"><b>Password</b></label>
+                    <input type="password" placeholder="Enter Password" name="password" id="password" required>
+
+                    <button type="submit">Login</button>
+
+                </div>
+            </form>
+
+</html>
