@@ -5,13 +5,33 @@ let getLogin = (req, res) => {
 }
 
 let postLogin = passport.authenticate('local', {
-        successRedirect: '/',
-        failureRedirect: '/login',
-        failureFlash: true
-    })
+    successRedirect: '/',
+    failureRedirect: '/login',
+    failureFlash: true
+})
 
 let logout = (req, res) => {
-
+    req.logOut((err) => {
+        if (err) return next(err);
+        res.redirect('/login');
+    });
 }
 
-export default { getLogin, postLogin, logout }
+let checkAuthenticated = (req, res, next) => {
+    if (req.isAuthenticated()) {
+        return next();
+    }
+    res.redirect('/login');
+}
+
+let checkNotAuthenticated = (req, res, next) => {
+    if (req.isAuthenticated()) {
+        return res.redirect('/');
+    }
+    next();
+}
+
+let AuthController = { getLogin, postLogin, logout, checkAuthenticated, checkNotAuthenticated }
+
+
+export default AuthController;

@@ -9,8 +9,8 @@ import pageRoutes from './routes/webpage.js';
 import flash from 'express-flash';
 import session from 'express-session';
 import passport from 'passport';
-import initializePassport from './configs/passport-config.js';
-import methodOverride from 'method-override';
+import PassportUtilities from './configs/passport-config.js';
+// import methodOverride from 'method-override';
 
 
 dotenv.config();
@@ -44,10 +44,10 @@ app.use(session({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(methodOverride('_method'));
+// app.use(methodOverride('_method'));
 
 import User from './models/user.js';
-initializePassport(
+PassportUtilities.initialize(
   passport,
 
   // have to modify to get data from DB

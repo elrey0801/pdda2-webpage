@@ -12,6 +12,10 @@ const userSchema = new Schema({
   name: {
     type: String,
     required: true
+  },
+  activated: {
+    type: Boolean,
+    default: false
   }
 });
 

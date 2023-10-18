@@ -1,9 +1,10 @@
 import express from 'express';
 
-import pageController from '../controllers/webpage.js';
+import WebPageController from '../controllers/webpage.js';
+import AuthController from '../controllers/auth.js';
 
 const router = express.Router();
 
-router.get('/', pageController.getHome);
+router.get('/', AuthController.checkAuthenticated, WebPageController.getHome);
 
 export default router; 

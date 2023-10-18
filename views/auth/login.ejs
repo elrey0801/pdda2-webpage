@@ -6,7 +6,9 @@
     <title>PĐĐ A2</title>
 </head>
 <h1>Login</h1>
-
+    <%if (messages.error) {%>
+        <%=messages.error%>
+            <%} %>
             <form action="/login" method="post">
                 <div class="container">
                     <label for="username"><b>Username</b></label>

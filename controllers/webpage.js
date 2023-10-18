@@ -1,5 +1,8 @@
-let getHome = (req, res) => {
-    res.render('home.ejs');
+let getHome = async (req, res) => {
+    let username = await req.user;
+    res.render('home.ejs', { username: username[0].name });
 }
 
-export default { getHome };
+let WebPageController = { getHome };
+
+export default WebPageController;

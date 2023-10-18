@@ -10,8 +10,11 @@ async function connectMongo() {
         })
         .catch(err => console.log(err))
     
-    // let password = await bcrypt.hash('root', 12)
-    // const user = new User({ _id: 'root', password: password, name: 'root' });
+    // var password = await bcrypt.hash('root', 12)
+    // var user = new User({ _id: 'root', password: password, name: 'root', activated: true });
+    // user.save();
+    // password = await bcrypt.hash('elrey', 12)
+    // user = new User({ _id: 'elrey', password: password, name: 'elrey', activated: true });
     // user.save();
 }
 
