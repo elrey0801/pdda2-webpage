@@ -2,8 +2,11 @@ import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
-  _id: {
-    type: String
+  username: {
+    type: String,
+    unique: true,
+    required: true,
+    lowercase: true
   },
   password: {
     type: String,
