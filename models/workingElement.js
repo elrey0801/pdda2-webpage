@@ -2,10 +2,6 @@ import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
 const workingElementSchema = new Schema({
-    groupID: {
-        type: String,
-        require: true
-    },
     scheduleStart: {
         type: Date,
         default: null
@@ -41,10 +37,6 @@ const workingElementSchema = new Schema({
     actualFinish: {
         type: Date,
         default: null
-    },
-    creator: {
-        type: String,
-        require: true
     }
 });
 

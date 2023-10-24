@@ -49,13 +49,10 @@ app.use(passport.session());
 import User from './models/user.js';
 PassportUtilities.initialize(
   passport,
-
-  // have to modify to get data from DB
   async function getUserName(username) {
-      return await User.find({ _id : username });
+      return await User.find({ username : username });
   },
   async function getId(id) {
-      //return await pool.execute('SELECT * FROM `users` WHERE id = ?', [id]);
       return await User.find({ _id : id });
   }
 );

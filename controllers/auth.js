@@ -31,7 +31,13 @@ let checkNotAuthenticated = (req, res, next) => {
     next();
 }
 
-let AuthController = { getLogin, postLogin, logout, checkAuthenticated, checkNotAuthenticated }
+let AuthController = { 
+    getLogin, 
+    postLogin, 
+    logout, 
+    checkAuthenticated, 
+    checkNotAuthenticated 
+}
 
 
 export default AuthController;
