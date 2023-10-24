@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import connectMongo from './configs/connectMongo.js';
 import authRoutes from './routes/auth.js'
 import pageRoutes from './routes/webpage.js';
+import mongoose from 'mongoose';
 // import cors from 'cors';
 
 import flash from 'express-flash';
@@ -36,11 +37,23 @@ const port = process.env.PORT;
 const host = process.env.HOST;
 
 // Authentication
+import { default as connectMongoDBSession} from 'connect-mongodb-session';
+const MongoDBStore = connectMongoDBSession(session);
+const store = new MongoDBStore({
+  uri: process.env.MONGO_URI,
+  collection: 'sessions'
+});
 app.use(flash());
 app.use(session({
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
+    store: store,
+    cookie: { 
+      secure: false,
+      httpOnly: true,
+      maxAge: 1000 * 60 * 5
+    }
 }));
 app.use(passport.initialize());
 app.use(passport.session());

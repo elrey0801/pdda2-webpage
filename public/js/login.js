@@ -1,4 +1,4 @@
-const HOST = 'http://localhost:8888';
+const HOST = process.env.URL;
 tag = `
         <div class="form-control">
                 <label for="username">User Name: </label>
@@ -30,5 +30,4 @@ async function login(event) {
                         username: username
                 })
         };
-        response = await fetch(HOST + '/post-login', red);
 }
