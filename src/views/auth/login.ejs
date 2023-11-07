@@ -1,25 +1,37 @@
-<html>
-
-<head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="/css/login-signup.css">
-    <title>PĐĐ A2</title>
-</head>
-<h1>Login</h1>
-    <%if (messages.error) {%>
-        <%=messages.error%>
-            <%} %>
-            <form action="/login" method="post">
-                <div class="container">
-                    <label for="username"><b>Username</b></label>
-                    <input type="text" placeholder="Enter Username" name="username" id="username" required>
-
-                    <label for="password"><b>Password</b></label>
-                    <input type="password" placeholder="Enter Password" name="password" id="password" required>
-
-                    <button type="submit">Login</button>
-
+<%- include('../includes/head.ejs') %>
+<body>
+    <form action="/login" method="post" class="d-flex justify-content-center align-items-center" style="height: 40vh;">
+        <div style="width: 400px;">
+            <div class="row mb-5">
+                <div class="col-12 d-flex justify-content-center ">
+                    <h2 class="display-4">Login</h2>
                 </div>
-            </form>
+            </div>  
+            <div class="row my-3">
+                <div class="col-12 d-flex justify-content-center">
+                    <input type="text" placeholder="Username" name="username" id="username" required class="form-control form-control-lg">
+                </div>
+            </div>
 
-</html>
+            <div class="row my-3">
+                <div class="col-12 d-flex justify-content-center">
+                    <input type="password" placeholder="Password" name="password" id="password" required class="form-control form-control-lg">
+                </div>
+            </div>
+            <div class="row mt-5">
+                <div class="col-12 d-flex justify-content-center">
+                    <button type="submit" class="btn btn-primary btn-lg">Login</button>
+                </div>
+            </div>   
+        </div>
+    </form>
+
+    <div>
+        <p style="text-align: center; color: red;"><%if (messages.error) {%>
+            <b><%=messages.error%></b>
+                <%}%></p>
+    </div>
+</body>
+
+
+<%- include('../includes/end.ejs') %>

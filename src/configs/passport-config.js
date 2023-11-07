@@ -21,7 +21,7 @@ let PassportUtilities = {
                 else {
                     let logstr = `[${new Date()}] ${username} --- input wrong password\n`
                     console.log(logstr);
-                    return done(null, false, { message: "Wrong password" });
+                    return done(null, false, { message: "Incorrect UserName or Password!" });
                 }
             }
             catch (err) {
