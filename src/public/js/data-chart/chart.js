@@ -1,47 +1,146 @@
+// const HOST = process.env.URL;
 const arrayRange = (start, stop, step) =>
     Array.from(
     { length: (stop - start) / step + 1 },
     (value, index) => start + index * step
 );
-const xValues = arrayRange(0,24,0.5);
-const yValues = [208.9, 203.2,	200.2,	196.6,	192.3,	192.4,	191.7,	192.8,	191.6,	200.4,	207.2,	217.4,	221.9,	210.4,	200.0,	194.7,	183.9,	166.6,	158.2,	139.4,	128.4,	122.9,	130.5,	135.5,	169.3,	177.4,	182.0,	177.3,	191.1,	211.0,	218.9,	241.7,	252.3,	250.4,	245.0,	250.2,	259.4,	258.8,	252.0,	245.3,	237.4,	244.7,	236.0,	229.2,	222.1,	216.2,	207.8,	202.5];
-const y1Values = Array(48).fill(510);
 
-new Chart("myChart", {
-type: "line",
-data: {
-    labels: xValues,
-    datasets: [{
-        fill: false,
-        lineTension: 0,
-        backgroundColor: "rgba(0,0,255,1.0)",
-        borderColor: 'blue',
-        data: yValues
-    },
-    {
-        fill: false,
-        lineTension: 0,
-        backgroundColor: "rgba(0,0,255,1.0)",
-        borderColor: 'red',
-        data: y1Values
-    },
-    ]
-},
-options: {
-    plugins: {
-        legend: {display: false},
-        title: {
-            display: true,
-            text: 'Custom Chart Title',
-            font: {size: 18}
-        }
-    },
-    pointStyle:false, 
-    scales: {
-    x: {min: 0, max: 47},
-    y: {
-        min: 0, max: Math.max(Math.max(...y1Values), ...yValues) * 1.1
-    }
+async function getData(element) {
+    const options = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            token: "346653cbcb27ca3618bfcf4f77221b3941def125ec6273430e062fb57b74726370483f407f6d2f370a2a1db27b55e876931b585401bde04b31d7b12baa3f47f8",
+            element: element
+        })
+    };
+    try {
+        var response = await fetch('http://localhost:8888' + '/get-op-data', options);
+        var response = await response.json();
+        console.log(response);
+        return response.element.i;
+    } catch (error) {
+        console.log(error);
     }
 }
-});
+
+async function drawChart() {
+    var element = document.getElementById('select-element').value;
+    const xValues = arrayRange(0,24,0.5);
+    const value = await getData(element);
+    var iValues = value.slice(0,-1);
+    var iLimit = Array(48).fill(value.slice(-1)[0]);
+    doTheCanvas(xValues, iValues, iLimit, iValues, iLimit, element)
+}
+
+function doTheCanvas(xValues, iValues, iLimit, pValues, pLimit, element) {
+    var canvasIChart = document.getElementById('canvas-i-chart');
+    var canvasPChart = document.getElementById('canvas-p-chart');
+    canvasIChart.innerHTML = `<canvas id="iChart" style="width:100%;max-width:600px; max-height: 400px;"></canvas>`;
+    canvasPChart.innerHTML = `<canvas id="pChart" style="width:100%;max-width:600px; max-height: 400px;"></canvas>`;
+        
+    new Chart("iChart", {
+        type: "line",
+        data: {
+            labels: xValues,
+            datasets: [{
+                fill: false,
+                lineTension: 0,
+                backgroundColor: "rgba(0,0,255,1.0)",
+                borderColor: 'blue',
+                data: iValues
+            },
+            {
+                fill: false,
+                lineTension: 0,
+                backgroundColor: "rgba(0,0,255,1.0)",
+                borderColor: 'red',
+                data: iLimit
+            },
+            ]
+        },
+        options: {
+            plugins: {
+                legend: {display: false},
+                title: {
+                    display: true,
+                    text: 'I: ' + element,
+                    font: {size: 18}
+                }
+            },
+            pointStyle:false, 
+            scales: {
+                x: {
+                    min: 0, max: 23.5
+                },
+                y: {
+                    min: 0, max: Math.max(Math.max(...iLimit), ...iValues) * 1.1
+                }
+            }
+        }
+    });
+    new Chart("pChart", {
+        type: "line",
+        data: {
+            labels: xValues,
+            datasets: [{
+                fill: false,
+                lineTension: 0,
+                backgroundColor: "rgba(0,0,255,1.0)",
+                borderColor: 'blue',
+                data: pValues
+            },
+            {
+                fill: false,
+                lineTension: 0,
+                backgroundColor: "rgba(0,0,255,1.0)",
+                borderColor: 'red',
+                data: pLimit
+            },
+            ]
+        },
+        options: {
+            plugins: {
+                legend: {display: false},
+                title: {
+                    display: true,
+                    text: 'P: ' + element,
+                    font: {size: 18}
+                }
+            },
+            pointStyle:false, 
+            scales: {
+                x: {
+                    min: 0, max: 23.5
+                },
+                y: {
+                    min: 0, max: Math.max(Math.max(...pLimit), ...pValues) * 1.1
+                }
+            }
+        }
+    });
+}
+
+async function getElementList() {
+    var response = await fetch('http://localhost:8888' + '/get-element-list');
+    var response = await response.json();
+
+    var innerSelectSection = ``;
+
+    for(e of response.element)
+        innerSelectSection += `<option value="${e}">${e}</option>`;
+
+    var selectSection = await document.querySelector('select');
+    selectSection.innerHTML = innerSelectSection;
+    $("select").trigger("chosen:updated");
+}
+
+function initCanvas() {
+    var element = "Data Chart";
+    const xValues = arrayRange(0,24,0.5);
+    var iValues = Array(48).fill(0);
+    doTheCanvas(xValues, iValues, iValues, iValues, iValues, element)
+}
+
+initCanvas();
+getElementList();

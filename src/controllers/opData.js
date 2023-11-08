@@ -7,9 +7,9 @@ const OPDataController = {
         var element = req.body.element;
         var data = req.body.data;
         var packedData = {
-            element: element,
+            date: date,
             data: [{
-                date,
+                name: element,
                 i: data
             }]
         };
@@ -17,10 +17,27 @@ const OPDataController = {
     },
 
     getOpData: async (req, res) => {
-        var element = req.body.elemnt;
-        console.log(OPData.findOne({element: element}));
+        var element = req.body.element;
+        try {
+            var result = await OPData.findOne({element: element});
+            result = result.data;
+            return res.status(200).json({
+                message: 'Found',
+                element: result[0]
+            })
+        } catch(error) {
+            return res.status(200).json({
+                message: 'Not Found',
+            })
+        }
+    },
+
+    getElementList: async (req, res) => {
+        var result = await OPData.find();
+        result = result.map(e => e.element);
         return res.status(200).json({
-            message: 'Added',
+            message: 'OK',
+            element: result
         })
     }
 }

@@ -6,7 +6,8 @@ import OPDataController from '../controllers/opData.js';
 
 const router = express.Router();
 
-router.post('/op-data', AuthController.checkAPIToken, OPDataController.postOpData);
-router.get('/op-data', AuthController.checkAPIToken, OPDataController.getOpData);
+router.post('/post-op-data', AuthController.checkAPIToken, OPDataController.postOpData);
+router.post('/get-op-data', AuthController.checkAPIToken, OPDataController.getOpData);
+router.get('/get-element-list', OPDataController.getElementList);
 
 export default router; 

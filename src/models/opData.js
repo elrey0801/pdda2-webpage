@@ -2,13 +2,14 @@ import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
 const opDataSchema = new Schema({
-    element: {
-        type: String,
-        required: true
+    date: {
+        type: Date,
+        required: true,
+        unique: true
     },
     data: [{
-        date: {
-            type: Date
+        name: {
+            type: String
         },
         i: [{
             type: Number
