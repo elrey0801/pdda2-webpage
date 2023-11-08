@@ -1,4 +1,5 @@
 import OPDataService from "../services/opData.js";
+import OPData from "../models/opData.js";
 
 const OPDataController = {
     postOpData: async (req, res) => {
@@ -16,7 +17,11 @@ const OPDataController = {
     },
 
     getOpData: async (req, res) => {
-
+        var element = req.body.elemnt;
+        console.log(OPData.findOne({element: element}));
+        return res.status(200).json({
+            message: 'Added',
+        })
     }
 }
 
