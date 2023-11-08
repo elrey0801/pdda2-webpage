@@ -1,0 +1,16 @@
+<%- include('./includes/head.ejs') %>
+
+
+<body>
+    <%- include('./includes/navigation.ejs', {username: username}) %>
+
+    <div class="container">
+        <div class="d-flex justify-content-center align-items-center">
+            <canvas id="myChart" style="width:100%;max-width:600px; max-height: 400px;"></canvas>
+        </div>    
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="/js/data-chart/chart.js"></script>
+</body>
+
+<%- include('./includes/end.ejs') %>
