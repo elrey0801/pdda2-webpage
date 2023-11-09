@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 
 const opDataListSchema = new Schema({
     date: {
-        type: Date,
+        type: String,
         required: true,
         unique: true
     },

@@ -2,7 +2,6 @@ import OPDataService from "../services/opData.js";
 import OPData from "../models/opData.js";
 import OPDataList from "../models/opDataList.js";
 import fs from 'fs';
-import { log } from "console";
 
 const OPDataController = {
     postOpData: async (req, res) => {
@@ -41,14 +40,14 @@ const OPDataController = {
 
     getElementList: async (req, res) => {
         var date = req.body.date;
-
         if(!date) {
             return res.status(404).json({
                 message: 'getElementList: Date is null',
             })
         }
+
         try {
-            var result = await OPDataList.findOne({date: date});
+            var result =await OPDataList.findOne({date: date});
             return res.status(200).json({
                 message: 'getElementList: OK',
                 elementList: result.elementList

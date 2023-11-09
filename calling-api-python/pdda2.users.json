@@ -1,0 +1,20 @@
+[{
+  "_id": {
+    "$oid": "6537be34913796cb4eefcdce"
+  },
+  "username": "root",
+  "password": "$2b$12$PPA6k6E0NtAfDeExEsmC3O/WZwezB9Uc06A1Vg8x92uRLC3A3baQq",
+  "name": "root",
+  "activated": true,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6537be34913796cb4eefcdd0"
+  },
+  "username": "elrey",
+  "password": "$2b$12$PXO/6wV9k/0sVbXsAIvIieGDQnK.VPnsbG8eUuzoYg7W/Ld7Flcge",
+  "name": "elrey",
+  "activated": true,
+  "__v": 0
+}]

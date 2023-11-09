@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 const opDataSchema = new Schema({
     date: {
-        type: Date,
+        type: String,
     },
     name: {
         type: String
