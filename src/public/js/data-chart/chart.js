@@ -1,4 +1,4 @@
-// const HOST = process.env.URL;
+const HOST = 'http://localhost:8888';
 const arrayRange = (start, stop, step) =>
     Array.from(
     { length: (stop - start) / step + 1 },
@@ -15,7 +15,7 @@ async function getData(date, name) {
         })
     };
     try {
-        var response = await fetch('http://localhost:8888' + '/get-op-data', options);
+        var response = await fetch(HOST + '/get-op-data', options);
         var response = await response.json();
         console.log(response);
         return {
@@ -163,7 +163,7 @@ async function getElementList() {
         })
     };
     try {
-        var response = await fetch('http://localhost:8888' + '/get-element-list', options);
+        var response = await fetch(HOST + '/get-element-list', options);
         var response = await response.json();
 
         var innerSelectSection = ``;
