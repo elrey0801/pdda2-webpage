@@ -2,6 +2,7 @@ import OPDataService from "../services/opData.js";
 import OPData from "../models/opData.js";
 import OPDataList from "../models/opDataList.js";
 import fs from 'fs';
+import { log } from "console";
 
 const OPDataController = {
     postOpData: async (req, res) => {
@@ -20,32 +21,44 @@ const OPDataController = {
 
     getOpData: async (req, res) => {
         var name = req.body.name;
-        var date = "2023-11-7";
+        var date = req.body.date;
         try {
             var result = await OPData.findOne({
-                date: Date.parse(date),
+                date: date,
                 name: name  
             });
-
+ 
             return res.status(200).json({
-                message: 'Found',
-                element: result
+                message: 'getOpData: OK',
+                name: result
             })
         } catch(error) {
-            console.log(error);
-            return res.status(200).json({
-                message: 'Not Found',
+            return res.status(404).json({
+                message: 'getOpData: Not Found',
             })
         }
     },
 
     getElementList: async (req, res) => {
-        var result = await OPDataList.find();
-        result = result.map(e => e.elementList);
-        return res.status(200).json({
-            message: 'OK',
-            element: result
-        })
+        var date = req.body.date;
+
+        if(!date) {
+            return res.status(404).json({
+                message: 'getElementList: Date is null',
+            })
+        }
+        try {
+            var result = await OPDataList.findOne({date: date});
+            return res.status(200).json({
+                message: 'getElementList: OK',
+                elementList: result.elementList
+            })
+        } catch(e) {
+            return res.status(404).json({
+                message: 'getElementList: Not Found',
+            })
+        }
+
     },
 
     addJSON: async (req, res) => {
@@ -56,13 +69,15 @@ const OPDataController = {
                 OPData.create(opData),
                 OPDataList.create(opDataList),
             ]);
-            console.log('data successfully imported')
-
+  
             return res.status(200).json({
-                message: 'OK',
+                message: 'addJSON: Imported data',
             })
           } catch (error) {
                 console.log('error', error) 
+                return res.status(404).json({
+                    message: 'addJSON: Import Failed',
+                })
         }
     }
 }

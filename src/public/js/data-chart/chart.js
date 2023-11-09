@@ -5,32 +5,37 @@ const arrayRange = (start, stop, step) =>
     (value, index) => start + index * step
 );
 
-async function getData(element) {
+async function getData(date, name) {
     const options = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-            token: "346653cbcb27ca3618bfcf4f77221b3941def125ec6273430e062fb57b74726370483f407f6d2f370a2a1db27b55e876931b585401bde04b31d7b12baa3f47f8",
-            element: element
+            date: date, 
+            name: name
         })
     };
     try {
         var response = await fetch('http://localhost:8888' + '/get-op-data', options);
         var response = await response.json();
         console.log(response);
-        return response.element.i;
-    } catch (error) {
-        console.log(error);
+        return response.name.i;
+    } catch (e) {
+        console.log(e);
     }
 }
 
 async function drawChart() {
-    var element = document.getElementById('select-element').value;
+    var name = document.getElementById('filterSelect').value;
+    if(!name) {
+        initCanvas();
+        return;
+    }
+    var date = document.getElementById('datepicker').value;
     const xValues = arrayRange(0,24,0.5);
-    const value = await getData(element);
+    const value = await getData(date, name);
     var iValues = value.slice(0,-1);
     var iLimit = Array(48).fill(value.slice(-1)[0]);
-    doTheCanvas(xValues, iValues, iLimit, iValues, iLimit, element)
+    doTheCanvas(xValues, iValues, iLimit, iValues, iLimit, name)
 }
 
 function doTheCanvas(xValues, iValues, iLimit, pValues, pLimit, element) {
@@ -122,17 +127,35 @@ function doTheCanvas(xValues, iValues, iLimit, pValues, pLimit, element) {
 }
 
 async function getElementList() {
-    var response = await fetch('http://localhost:8888' + '/get-element-list');
-    var response = await response.json();
+    var $select = $('#filterSelect');
+    $select.empty();
 
-    var innerSelectSection = ``;
+    var date = document.getElementById('datepicker').value;
+    const options = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            date: date
+        })
+    };
+    try {
+        var response = await fetch('http://localhost:8888' + '/get-element-list', options);
+        var response = await response.json();
 
-    for(e of response.element)
-        innerSelectSection += `<option value="${e}">${e}</option>`;
+        var innerSelectSection = ``;
 
-    var selectSection = await document.querySelector('select');
-    selectSection.innerHTML = innerSelectSection;
-    $("select").trigger("chosen:updated");
+        for(e of response.elementList)
+            innerSelectSection += `<option value="${e}">${e}</option>`;
+    
+        var selectSection = await document.querySelector('select');
+        selectSection.innerHTML = innerSelectSection;
+    } catch(e) {
+        console.log(e);
+    }
+
+
+
+    // $("select").trigger("chosen:updated");
 }
 
 function initCanvas() {
@@ -142,5 +165,6 @@ function initCanvas() {
     doTheCanvas(xValues, iValues, iValues, iValues, iValues, element)
 }
 
+
 initCanvas();
-getElementList();
+
