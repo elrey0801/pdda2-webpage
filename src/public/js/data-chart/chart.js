@@ -18,7 +18,10 @@ async function getData(date, name) {
         var response = await fetch('http://localhost:8888' + '/get-op-data', options);
         var response = await response.json();
         console.log(response);
-        return response.name.i;
+        return {
+            i: response.name.i,
+            p: response.name.p
+        }
     } catch (e) {
         console.log(e);
     }
@@ -33,9 +36,11 @@ async function drawChart() {
     var date = document.getElementById('datepicker').value;
     const xValues = arrayRange(0,24,0.5);
     const value = await getData(date, name);
-    var iValues = value.slice(0,-1);
-    var iLimit = Array(48).fill(value.slice(-1)[0]);
-    doTheCanvas(xValues, iValues, iLimit, iValues, iLimit, name)
+    var iValues = value.i.slice(0,-1);
+    var iLimit = Array(48).fill(value.i.slice(-1)[0]);
+    var pValues = value.p.slice(0,-1);
+    var pLimit = value.p.slice(-1)[0];
+    doTheCanvas(xValues, iValues, iLimit, pValues, pLimit, name)
 }
 
 function doTheCanvas(xValues, iValues, iLimit, pValues, pLimit, element) {
@@ -43,7 +48,10 @@ function doTheCanvas(xValues, iValues, iLimit, pValues, pLimit, element) {
     var canvasPChart = document.getElementById('canvas-p-chart');
     canvasIChart.innerHTML = `<canvas id="iChart" style="width:100%;max-width:600px; max-height: 400px;"></canvas>`;
     canvasPChart.innerHTML = `<canvas id="pChart" style="width:100%;max-width:600px; max-height: 400px;"></canvas>`;
-        
+    
+    var pLimitPos = Array(48).fill(pLimit);
+    var pLimitNeg = Array(48).fill(-pLimit);
+    
     new Chart("iChart", {
         type: "line",
         data: {
@@ -79,7 +87,7 @@ function doTheCanvas(xValues, iValues, iLimit, pValues, pLimit, element) {
                     min: 0, max: 23.5
                 },
                 y: {
-                    min: 0, max: Math.max(Math.max(...iLimit), ...iValues) * 1.1
+                    min: 0, max: Math.max(Math.max(iLimit[0]), ...iValues) * 1.1
                 }
             }
         }
@@ -100,7 +108,22 @@ function doTheCanvas(xValues, iValues, iLimit, pValues, pLimit, element) {
                 lineTension: 0,
                 backgroundColor: "rgba(0,0,255,1.0)",
                 borderColor: 'red',
-                data: pLimit
+                data: pLimitPos
+            },
+            {
+                fill: false,
+                lineTension: 0,
+                backgroundColor: "rgba(0,0,255,1.0)",
+                borderColor: 'red',
+                data: pLimitNeg
+            },
+            {
+                fill: false,
+                lineTension: 0,
+                backgroundColor: "rgba(0,0,255,1.0)",
+                borderColor: 'black',
+                data: Array(48).fill(0),
+                borderWidth: 1
             },
             ]
         },
@@ -119,7 +142,8 @@ function doTheCanvas(xValues, iValues, iLimit, pValues, pLimit, element) {
                     min: 0, max: 23.5
                 },
                 y: {
-                    min: 0, max: Math.max(Math.max(...pLimit), ...pValues) * 1.1
+                    min: Math.min(Math.min(-pLimit), ...pValues) * 1.1, 
+                    max: Math.max(Math.max(pLimit), ...pValues) * 1.1
                 }
             }
         }

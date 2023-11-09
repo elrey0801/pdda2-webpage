@@ -62,8 +62,8 @@ const OPDataController = {
     },
 
     addJSON: async (req, res) => {
-        const opData = JSON.parse(fs.readFileSync('op-data.json', 'utf-8'));
-        const opDataList = JSON.parse(fs.readFileSync('op-data-list.json', 'utf-8'));
+        const opData = JSON.parse(fs.readFileSync('./calling-api-python/op-data.json', 'utf-8'));
+        const opDataList = JSON.parse(fs.readFileSync('./calling-api-python/op-data-list.json', 'utf-8'));
         try {
             await Promise.all([
                 OPData.create(opData),

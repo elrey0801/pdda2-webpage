@@ -16,6 +16,9 @@ const opDataSchema = new Schema({
     }],
     q: [{
         type: Number
+    }],
+    u: [{
+        type: Number
     }]
 });
 
