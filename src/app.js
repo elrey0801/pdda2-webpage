@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import connectMongo from './configs/connectMongo.js';
 import authRoutes from './routes/auth.js'
 import pageRoutes from './routes/webpage.js';
+import opDataRoutes from './routes/opData.js';
 import User from './models/user.js';
 import mongoose from 'mongoose';
 // import cors from 'cors';
@@ -71,6 +72,7 @@ PassportUtilities.initialize(
 // Routes
 app.use(authRoutes);
 app.use(pageRoutes);
+app.use(opDataRoutes);
 
 
 export default app;

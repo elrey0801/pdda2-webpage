@@ -32,6 +32,13 @@ const AuthController = {
         next();
     },
 
+    checkAPIToken: (req, res, next) => {
+        if (req.body.token === process.env.API_TOKEN)
+            return next();
+        return res.status(401).json({
+            message: 'Wrong Token',
+        }) 
+    }
 }
 
 export default AuthController;

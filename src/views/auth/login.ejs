@@ -1,36 +1,40 @@
 <%- include('../includes/head.ejs') %>
 <body>
-    <form action="/login" method="post" class="d-flex justify-content-center align-items-center" style="height: 40vh;">
-        <div style="width: 400px;">
-            <div class="row mb-5">
-                <div class="col-12 d-flex justify-content-center ">
-                    <h2 class="display-4">Login</h2>
+    <div class="container mt-5"  style="height: 60vh;">
+        <form action="/login" method="post" class="d-flex justify-content-center align-items-center">
+            <div style="width: 400px;">
+                <div class="row mb-5">
+                    <div class="col-12 d-flex justify-content-center ">
+                        <h2 class="display-4">Login</h2>
+                    </div>
+                </div>  
+                <div class="row my-3">
+                    <div class="col-12 d-flex justify-content-center">
+                        <input type="text" placeholder="Username" name="username" id="username" required class="form-control form-control-lg">
+                    </div>
                 </div>
-            </div>  
-            <div class="row my-3">
-                <div class="col-12 d-flex justify-content-center">
-                    <input type="text" placeholder="Username" name="username" id="username" required class="form-control form-control-lg">
+    
+                <div class="row my-3">
+                    <div class="col-12 d-flex justify-content-center">
+                        <input type="password" placeholder="Password" name="password" id="password" required class="form-control form-control-lg">
+                    </div>
                 </div>
+                <div class="row mt-5 mb-3">
+                    <div class="col-12 d-flex justify-content-center">
+                        <button type="submit" class="btn btn-primary btn-lg">Login</button>
+                    </div>
+                </div>   
             </div>
+        </form>
 
-            <div class="row my-3">
-                <div class="col-12 d-flex justify-content-center">
-                    <input type="password" placeholder="Password" name="password" id="password" required class="form-control form-control-lg">
-                </div>
-            </div>
-            <div class="row mt-5">
-                <div class="col-12 d-flex justify-content-center">
-                    <button type="submit" class="btn btn-primary btn-lg">Login</button>
-                </div>
-            </div>   
+    
+
+        <div class="container">
+            <p style="text-align: center; color: red;"><%if (messages.error) {%>
+                <b><%=messages.error%></b>
+                    <%}%></p>
         </div>
-    </form>
-
-    <div>
-        <p style="text-align: center; color: red;"><%if (messages.error) {%>
-            <b><%=messages.error%></b>
-                <%}%></p>
-    </div>
+    </div>  
 </body>
 
 

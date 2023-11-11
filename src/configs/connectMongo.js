@@ -16,6 +16,9 @@ async function connectMongo() {
     // password = await bcrypt.hash('elrey', 12)
     // user = new User({ username: 'elrey', password: password, name: 'elrey', activated: true });
     // user.save();
+    // password = await bcrypt.hash('elrey', 12)
+    // user = new User({ username: 'elrey', password: password, name: 'elrey', activated: true });
+    // user.save();
 }
 
 export default connectMongo;
