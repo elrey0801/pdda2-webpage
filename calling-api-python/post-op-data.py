@@ -48,7 +48,7 @@ df_ip = df[(df[df.columns[4]]=='P') | (df[df.columns[4]]=='I')]
 
 #%% OPDataList
 elementList = list(df_ip.iloc[:,2].unique())
-opDataList = {'date': "2023-11-07", 'elementList': elementList}
+opDataList = {'date': date, 'elementList': elementList}
 
 #%% OPData
 import json
