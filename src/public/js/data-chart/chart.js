@@ -31,33 +31,51 @@ async function getData(date, name) {
     }
 }
 
-function sumArray(arr, option) {
+function sumArray(arr, sumOption, checkPSign = false) {
+    //sumOption=2 -> cộng, sumOption=1 -> trừ, 
+    // checkPSign để lấy theo chiều P khi cộng I -> true, cuối cùng khi sum lại thì k cần xét dấu nên false
     var resI = Array(48).fill(0);
     var resP = Array(48).fill(0);
+    var pSign = 2;
     for(ele of arr) {
         for(var i = 0; i < 48; ++i) {
-            resI[i] += Math.round(ele.i[i]*(-1)**option)
-            resP[i] += Math.round(ele.p[i]*(-1)**option)
+            if(checkPSign)
+                pSign = ele.p[i] > 0 ? 2 : 1
+            resI[i] += Math.round(ele.i[i]*((-1)**sumOption)*((-1)**pSign))
+            resP[i] += Math.round(ele.p[i]*(-1)**sumOption)
         }
     }
     return {i: resI, p: resP};
 }
 
 async function drawChart() {
+    var date = document.getElementById('datepicker').value;
     var plusSelectSection = document.querySelector('#plus-select');
     var minusSelectSection = document.querySelector('#minus-select');
     var plusArray = []
     var minusArray = []
+    const xValues = arrayRange(0,24,0.5);
     // thêm sẵn hồi lấy luôn limit chung cái plus
     var limitSelectSection = document.querySelector('#limit-select').value;
 
     if((plusSelectSection.length + minusSelectSection.length) == 0) {
+        var elementSelected = document.querySelector('#filterSelect');
+        if(elementSelected.value !== '') {
+            singleRes = await getData(date, elementSelected.value)
+            var iValues = singleRes.i.slice(0,-1);
+            var iLimit = Array(48).fill(singleRes.i.slice(-1)[0]);
+            var pValues = singleRes.p.slice(0,-1);
+            var pLimit = singleRes.p.slice(-1)[0];
+            doTheCanvas(xValues, iValues, iLimit, pValues, pLimit, singleRes.name);
+            document.querySelector('#limit-select').value = "";
+            return;
+        }
         initCanvas();
         return;
     }
 
-    var date = document.getElementById('datepicker').value;
-    const xValues = arrayRange(0,24,0.5);
+    
+    
     for(var e of plusSelectSection.options) {
         plusArray.push(getData(date, e.value))
     }
@@ -76,8 +94,8 @@ async function drawChart() {
     if(limitSelectSection !== "")
         resLimit = resPlusArray.pop();
 
-    resPlusArray = sumArray(resPlusArray, 2);
-    resMinusArray = sumArray(resMinusArray, 1);
+    resPlusArray = sumArray(resPlusArray, sumOption=2, checkPSign=true);
+    resMinusArray = sumArray(resMinusArray, sumOption=1, checkPSign=true);
 
 
     console.log(resPlusArray, resMinusArray);
@@ -88,7 +106,8 @@ async function drawChart() {
     }]
 
     resObject = sumArray(resObject, 2);
-    resI = resObject.i;
+    resI = resObject.i.map(num => Math.abs(num));
+    console.log(resI);
     resP = resObject.p;
 
     console.log(resI, resP);
@@ -146,7 +165,7 @@ function doTheCanvas(xValues, iValues, iLimit, pValues, pLimit, element) {
                     min: 0, max: 23.5
                 },
                 y: {
-                    min: 0, max: Math.max(iLimit[0], ...iValues) * 1.1
+                    min: 0, max: Math.round(Math.max(iLimit[0], ...iValues) * 1.1)
                 }
             }
         }
@@ -201,8 +220,8 @@ function doTheCanvas(xValues, iValues, iLimit, pValues, pLimit, element) {
                     min: 0, max: 23.5
                 },
                 y: {
-                    min: Math.min(-pLimit, ...pValues) * 1.1, 
-                    max: Math.max(pLimit, ...pValues) * 1.1
+                    min: Math.round(Math.min(-pLimit, ...pValues) * 1.1),
+                    max: Math.round(Math.max(pLimit, ...pValues) * 1.1)
                 }
             }
         }
