@@ -1,4 +1,5 @@
-const HOST = 'http://localhost:8888';
+const HOST = window.location.host.split(':')[0] == 'localhost' ? 'http://localhost:8888' : 'https://' + window.location.host; 
+
 const arrayRange = (start, stop, step) =>
     Array.from(
     { length: (stop - start) / step + 1 },
