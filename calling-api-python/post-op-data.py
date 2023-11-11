@@ -78,8 +78,8 @@ for e in elementList:
 
  
 #%%
-with open("./calling-api-python/" + date + "-op-data.json", "w") as outfile:
+with open("./json-opdata/" + date + "-op-data.json", "w") as outfile:
     json.dump(opData, outfile)
 
-with open("./calling-api-python/" + date + "-op-data-list.json", "w") as outfile:
+with open("./json-opdata/" + date + "-op-data-list.json", "w") as outfile:
     json.dump(opDataList, outfile)

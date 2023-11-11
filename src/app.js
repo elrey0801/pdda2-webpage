@@ -52,7 +52,7 @@ app.use(session({
     cookie: { 
       secure: false,
       httpOnly: true,
-      maxAge: 1000 * 60 * 5
+      maxAge: 1000 * 60 * 60 * 24
     }
 }));
 app.use(passport.initialize());

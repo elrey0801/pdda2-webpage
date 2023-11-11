@@ -17,6 +17,9 @@ async function getData(date, name) {
     try {
         var response = await fetch(HOST + '/get-op-data', options);
         var response = await response.json();
+        if(response.status == 401) {
+            window.location.href = HOST;
+        }
         console.log(response);
         return {
             i: response.name.i,
@@ -46,8 +49,8 @@ async function drawChart() {
 function doTheCanvas(xValues, iValues, iLimit, pValues, pLimit, element) {
     var canvasIChart = document.getElementById('canvas-i-chart');
     var canvasPChart = document.getElementById('canvas-p-chart');
-    canvasIChart.innerHTML = `<canvas id="iChart" style="width:100%;max-width:600px; max-height: 400px;"></canvas>`;
-    canvasPChart.innerHTML = `<canvas id="pChart" style="width:100%;max-width:600px; max-height: 400px;"></canvas>`;
+    canvasIChart.innerHTML = `<canvas id="iChart" style="width:100%;max-width:800px; max-height: 400px;"></canvas>`;
+    canvasPChart.innerHTML = `<canvas id="pChart" style="width:100%;max-width:800px; max-height: 400px;"></canvas>`;
     
     var pLimitPos = Array(48).fill(pLimit);
     var pLimitNeg = Array(48).fill(-pLimit);
@@ -166,13 +169,27 @@ async function getElementList() {
         var response = await fetch(HOST + '/get-element-list', options);
         var response = await response.json();
 
+        if(response.status == 401) {
+            window.location.href = HOST;
+        }
+
         var innerSelectSection = ``;
 
         for(e of response.elementList)
             innerSelectSection += `<option value="${e}">${e}</option>`;
     
-        var selectSection = await document.querySelector('select');
+        var selectSection = document.querySelector('select');
         selectSection.innerHTML = innerSelectSection;
+
+        // var selectSection = await document.querySelector('#filterSelect');
+        // var option;
+        // for(e of response.elementList) {
+        //     option = document.createElement("option");
+        //     option.text = e;
+        //     option.value = e;
+        //     selectSection.add(option);
+        // }
+
     } catch(e) {
         console.log(e);
     }
@@ -189,6 +206,65 @@ function initCanvas() {
     doTheCanvas(xValues, iValues, iValues, iValues, iValues, element)
 }
 
+function addPlus() {
+    var elementSelected = document.querySelector('#filterSelect');
+    if(elementSelected.value === '') return;
+    var plusSelectSection = document.querySelector('#plus-select');
+    var option = document.createElement("option");
+    option.text = elementSelected.value;
+    option.value = elementSelected.value;
+    plusSelectSection.add(option);
+    elementSelected.remove(elementSelected.selectedIndex);
+}
+
+function addMinus() {
+    var elementSelected = document.querySelector('#filterSelect');
+    if(elementSelected.value === '') return;
+    var minusSelectSection = document.querySelector('#minus-select');
+    var option = document.createElement("option");
+    option.text = elementSelected.value;
+    option.value = elementSelected.value;
+    minusSelectSection.add(option);
+    elementSelected.remove(elementSelected.selectedIndex);
+}
+
+function setLimit() {
+    var elementSelected = document.querySelector('#plus-select');
+    var limitSelectSection = document.querySelector('#limit-select');
+    limitSelectSection.value = elementSelected.value;
+}
+
+function removePlusElement() {
+    var plusElementSelected = document.querySelector('#plus-select');
+    if(plusElementSelected.value == "") return;
+    var selectSection = document.querySelector('#filterSelect');
+    var option = document.createElement("option");
+    option.text = plusElementSelected.value;
+    option.value = plusElementSelected.value;
+    selectSection.add(option);
+    plusElementSelected.remove(plusElementSelected.selectedIndex);
+}
+
+function removeMinusElement() {
+    var minusElementSelected = document.querySelector('#minus-select');
+    if(minusElementSelected.value == "") return;
+    var selectSection = document.querySelector('#filterSelect');
+    var option = document.createElement("option");
+    option.text = minusElementSelected.value;
+    option.value = minusElementSelected.value;
+    selectSection.add(option);
+    minusElementSelected.remove(minusElementSelected.selectedIndex);
+}
+
+
+function clearElement() {
+    var plusSelectSection = document.querySelector('#plus-select');
+    var minusSelectSection = document.querySelector('#minus-select');
+    var limitSelectSection = document.querySelector('#limit-select');
+    plusSelectSection.options.length = 0;
+    minusSelectSection.options.length = 0;
+    limitSelectSection.value = "";
+}
 
 initCanvas();
 
