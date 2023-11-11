@@ -29,7 +29,7 @@ const OPDataController = {
  
             return res.status(200).json({
                 message: 'getOpData: OK',
-                name: result,
+                element: result,
             })
         } catch(error) {
             return res.status(404).json({

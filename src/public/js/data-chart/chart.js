@@ -22,35 +22,91 @@ async function getData(date, name) {
         }
         console.log(response);
         return {
-            i: response.name.i,
-            p: response.name.p
+            name: response.element.name,
+            i: response.element.i,
+            p: response.element.p
         }
     } catch (e) {
         console.log(e);
     }
 }
 
+function sumArray(arr, option) {
+    var resI = Array(48).fill(0);
+    var resP = Array(48).fill(0);
+    for(ele of arr) {
+        for(var i = 0; i < 48; ++i) {
+            resI[i] += Math.round(ele.i[i]*(-1)**option)
+            resP[i] += Math.round(ele.p[i]*(-1)**option)
+        }
+    }
+    return {i: resI, p: resP};
+}
+
 async function drawChart() {
-    var name = document.getElementById('filterSelect').value;
-    if(!name) {
+    var plusSelectSection = document.querySelector('#plus-select');
+    var minusSelectSection = document.querySelector('#minus-select');
+    var plusArray = []
+    var minusArray = []
+    // thêm sẵn hồi lấy luôn limit chung cái plus
+    var limitSelectSection = document.querySelector('#limit-select').value;
+
+    if((plusSelectSection.length + minusSelectSection.length) == 0) {
         initCanvas();
         return;
     }
+
     var date = document.getElementById('datepicker').value;
     const xValues = arrayRange(0,24,0.5);
-    const value = await getData(date, name);
-    var iValues = value.i.slice(0,-1);
-    var iLimit = Array(48).fill(value.i.slice(-1)[0]);
-    var pValues = value.p.slice(0,-1);
-    var pLimit = value.p.slice(-1)[0];
-    doTheCanvas(xValues, iValues, iLimit, pValues, pLimit, name)
+    for(var e of plusSelectSection.options) {
+        plusArray.push(getData(date, e.value))
+    }
+    for(var e of minusSelectSection.options) {
+        minusArray.push(getData(date, e.value))
+    }
+    // ké tí lấy cái limit nha
+    if(limitSelectSection !== "")
+        plusArray.push(getData(date, limitSelectSection))
+
+    var resPlusArray = await Promise.all(plusArray);
+    var resMinusArray = await Promise.all(minusArray);
+
+    // lấy xong nằm ở đít rồi pop ra lại
+    var resLimit;
+    if(limitSelectSection !== "")
+        resLimit = resPlusArray.pop();
+
+    resPlusArray = sumArray(resPlusArray, 2);
+    resMinusArray = sumArray(resMinusArray, 1);
+
+
+    console.log(resPlusArray, resMinusArray);
+
+    var resObject = [{
+        i: resPlusArray.i.concat(resPlusArray.i),
+        p: resPlusArray.p.concat(resPlusArray.p),
+    }]
+
+    resObject = sumArray(resObject, 2);
+    resI = resObject.i;
+    resP = resObject.p;
+
+    console.log(resI, resP);
+
+
+    
+    var iValues = resI;
+    var iLimit = resLimit ? Array(48).fill(resLimit.i.slice(-1)[0]) : Array(48).fill(0);
+    var pValues = resP;
+    var pLimit = resLimit ? resLimit.p.slice(-1)[0] : 0;
+    doTheCanvas(xValues, iValues, iLimit, pValues, pLimit, resLimit ? resLimit.name : ' Data Chart')
 }
 
 function doTheCanvas(xValues, iValues, iLimit, pValues, pLimit, element) {
     var canvasIChart = document.getElementById('canvas-i-chart');
     var canvasPChart = document.getElementById('canvas-p-chart');
-    canvasIChart.innerHTML = `<canvas id="iChart" style="width:100%;max-width:800px; max-height: 400px;"></canvas>`;
-    canvasPChart.innerHTML = `<canvas id="pChart" style="width:100%;max-width:800px; max-height: 400px;"></canvas>`;
+    canvasIChart.innerHTML = `<canvas id="iChart" style="width:100%;max-width:800px; max-height: 500px;"></canvas>`;
+    canvasPChart.innerHTML = `<canvas id="pChart" style="width:100%;max-width:800px; max-height: 500px;"></canvas>`;
     
     var pLimitPos = Array(48).fill(pLimit);
     var pLimitNeg = Array(48).fill(-pLimit);
@@ -90,7 +146,7 @@ function doTheCanvas(xValues, iValues, iLimit, pValues, pLimit, element) {
                     min: 0, max: 23.5
                 },
                 y: {
-                    min: 0, max: Math.max(Math.max(iLimit[0]), ...iValues) * 1.1
+                    min: 0, max: Math.max(iLimit[0], ...iValues) * 1.1
                 }
             }
         }
@@ -145,8 +201,8 @@ function doTheCanvas(xValues, iValues, iLimit, pValues, pLimit, element) {
                     min: 0, max: 23.5
                 },
                 y: {
-                    min: Math.min(Math.min(-pLimit), ...pValues) * 1.1, 
-                    max: Math.max(Math.max(pLimit), ...pValues) * 1.1
+                    min: Math.min(-pLimit, ...pValues) * 1.1, 
+                    max: Math.max(pLimit, ...pValues) * 1.1
                 }
             }
         }
