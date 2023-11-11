@@ -32,11 +32,13 @@ const AuthController = {
         next();
     },
 
-    checkAPIToken: (req, res, next) => {
-        if (req.body.token === process.env.API_TOKEN)
+    checkAPIAuthenticated: (req, res, next) => {
+        if (req.isAuthenticated()) {
             return next();
+        }
         return res.status(401).json({
-            message: 'Wrong Token',
+            message: 'API: Not Authenticated',
+            status: 401,
         }) 
     }
 }

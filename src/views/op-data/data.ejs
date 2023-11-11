@@ -1,0 +1,110 @@
+    <%- include('../includes/head.ejs') %>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+</head>
+</head>
+
+<body>
+    <%- include('../includes/navigation.ejs', {username: username}) %>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div id="canvas-i-chart" class="col-lg-6 d-flex justify-content-center align-items-center">
+            
+            </div>
+            <div id="canvas-p-chart" class="col-lg-6 d-flex justify-content-center align-items-center">
+            
+            </div>
+        </div>
+
+
+        <div class="row mt-3">
+            <div class="col-lg-6 mt-2">
+                <div class="row">
+                    <div class="input-group d-flex justify-content-center align-items-center">
+                        <input type="date" id="datepicker" style="width: 200px;">
+                        <button type="button" class="btn btn-success btn-sm" onclick="getElementList()">Load Date</button>
+                    </div>
+                </div>
+        
+                <div class="row">
+                    <div class="col-12 mt-2 d-flex justify-content-center">
+                        <select id="filterSelect" data-placeholder="Choose an element"  style="width: 400px;">
+                        </select>
+    
+                    </div>
+                    <div class="col-12 mt-2 d-flex justify-content-center">
+                        <div>
+                            <input type="text" id="limit-select" style="width: 400px;" placeholder="Limit" readonly>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="mt-2 d-flex justify-content-center">
+                    <div class="btn-group" style="width: 500px;">
+                        <button type="button" class="col-12 col-lg-2.4 btn btn-success btn-sm" onclick="drawChart()">Draw Chart</button>
+                        <button type="button" class="col-12 col-lg-2.4 btn btn-danger btn-sm" onclick="addPlus()"><b>+</b></button>
+                        <button type="button" class="col-12 col-lg-2.4 btn btn-primary btn-sm" onclick="addMinus()"><b>-</b></button>
+                        <button type="button" class="col-12 col-lg-2.4 btn btn-warning btn-sm" onclick="setLimit()">Limit</button>
+                        <button type="button" class="col-12 col-lg-2.4 btn btn-secondary btn-sm" onclick="clearElement()">Clear</button>
+                    </div>
+                </div>
+            </div>
+            <!-- <button type="button" class="col-12 col-lg-2 btn btn-danger btn-sm" onclick="removeElement()">Remove</button> -->
+            <div class="col-lg-6 row mt-2 d-flex justify-content-center align-items-center">
+
+                <div class="col-lg-6">
+                    <div class="row">
+                        <div class="col-6 d-flex justify-content-end align-items-center mt-1">
+                            <label for="plus-select" class="form-label"><b>Select (+)</b></label>
+                        </div>   
+                        <div class="col-6 d-flex justify-content-start align-items-center mb-1">
+                            <button type="button" class="btn btn-danger btn-sm" onclick="removePlusElement()">Remove</button>
+                        </div>  
+                    </div>
+
+                    <div class="row">
+                        <div class="col d-flex justify-content-center align-items-center">
+                            <select class="form-select" id="plus-select" size="4">
+
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="row">
+                        <div class="col-6 d-flex justify-content-end align-items-center mt-1">
+                            <label for="minus-select" class="form-label"><b>Select (-)</b></label>
+                        </div> 
+                        <div class="col-6 d-flex justify-content-start align-items-center mb-1">
+                            <button type="button" class="btn btn-danger btn-sm" onclick="removeMinusElement()">Remove</button>
+                        </div>   
+                    </div>
+                    <div class="row">
+                        <div class="col d-flex justify-content-center align-items-center">
+                            <select class="form-select" id="minus-select" size="4" onchange="getSelectedValue(this)">
+
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+
+        </div>
+
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="/js/data-chart/chart.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#filterSelect').select2();
+        });
+    </script>
+</body>
+
+<%- include('../includes/end.ejs') %>

@@ -6,7 +6,7 @@ const WebPageController = {
     
     getDataPage: async (req, res) => {
         let username = await req.user;
-        res.render('data.ejs', { username: username[0].name });
+        res.render('./op-data/data.ejs', { username: username[0].name });
     }
 }
 
