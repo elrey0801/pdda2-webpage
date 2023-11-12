@@ -59,6 +59,8 @@ async function drawChart() {
     // thêm sẵn hồi lấy luôn limit chung cái plus
     var limitSelectSection = document.querySelector('#limit-select').value;
 
+
+    // nếu user không chọn + hay - mà chỉ vẽ đồ thị đơn
     if((plusSelectSection.length + minusSelectSection.length) == 0) {
         var elementSelected = document.querySelector('#filterSelect');
         if(elementSelected.value !== '') {
@@ -68,7 +70,7 @@ async function drawChart() {
             var pValues = singleRes.p.slice(0,-1);
             var pLimit = singleRes.p.slice(-1)[0];
             doTheCanvas(xValues, iValues, iLimit, pValues, pLimit, singleRes.name);
-            document.querySelector('#limit-select').value = "";
+            document.querySelector('#limit-select').value = singleRes.name;
             return;
         }
         initCanvas();
