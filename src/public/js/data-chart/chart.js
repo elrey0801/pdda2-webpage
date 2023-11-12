@@ -104,8 +104,8 @@ async function drawChart() {
     console.log(resPlusArray, resMinusArray);
 
     var resObject = [{
-        i: resPlusArray.i.concat(resPlusArray.i),
-        p: resPlusArray.p.concat(resPlusArray.p),
+        i: resPlusArray.i.concat(resMinusArray.i),
+        p: resPlusArray.p.concat(resMinusArray.p),
     }]
 
     resObject = sumArray(resObject, 2);
