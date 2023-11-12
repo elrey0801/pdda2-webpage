@@ -13,15 +13,33 @@ import session from 'express-session';
 import passport from 'passport';
 import PassportUtilities from './configs/passport-config.js';
 import { default as connectMongoDBSession} from 'connect-mongodb-session';
+import helmet from 'helmet';
+import compression from 'compression';
+
 // import methodOverride from 'method-override';
 
 
 dotenv.config();
 
 const app = express();
+
 app.set('view engine', 'ejs');
 app.set('views', './src/views');
 app.use(express.static('./src/public'));
+
+// const cspOptions = {
+//   directives: {
+//     defaultSrc: ["'self'"],
+//     scriptSrc: ["'self'", 'trusted-scripts.com'],
+//     // Add other directives as needed
+//   },
+// };
+
+// app.use(helmet({ contentSecurityPolicy: cspOptions }));
+
+app.use(helmet({ contentSecurityPolicy: false }))
+app.use(compression());
+
 
 app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.json()); //application/json
@@ -32,6 +50,7 @@ app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
   next();
 });
+
 // app.use(cors());
 
 connectMongo();
