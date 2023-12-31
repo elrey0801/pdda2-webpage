@@ -104,8 +104,12 @@ async function drawChart() {
     console.log(resPlusArray, resMinusArray);
 
     var resObject = [{
-        i: resPlusArray.i.concat(resPlusArray.i),
-        p: resPlusArray.p.concat(resPlusArray.p),
+        i: resPlusArray.i,
+        p: resPlusArray.p
+    },
+    {
+        i: resMinusArray.i,
+        p: resMinusArray.p
     }]
 
     resObject = sumArray(resObject, 2);
@@ -292,7 +296,7 @@ function addPlus() {
     option.text = elementSelected.value;
     option.value = elementSelected.value;
     plusSelectSection.add(option);
-    elementSelected.remove(elementSelected.selectedIndex);
+    // elementSelected.remove(elementSelected.selectedIndex);
 }
 
 function addMinus() {
@@ -303,11 +307,11 @@ function addMinus() {
     option.text = elementSelected.value;
     option.value = elementSelected.value;
     minusSelectSection.add(option);
-    elementSelected.remove(elementSelected.selectedIndex);
+    // elementSelected.remove(elementSelected.selectedIndex);
 }
 
 function setLimit() {
-    var elementSelected = document.querySelector('#plus-select');
+    var elementSelected = document.querySelector('#filterSelect');
     var limitSelectSection = document.querySelector('#limit-select');
     limitSelectSection.value = elementSelected.value;
 }
@@ -315,22 +319,22 @@ function setLimit() {
 function removePlusElement() {
     var plusElementSelected = document.querySelector('#plus-select');
     if(plusElementSelected.value == "") return;
-    var selectSection = document.querySelector('#filterSelect');
-    var option = document.createElement("option");
-    option.text = plusElementSelected.value;
-    option.value = plusElementSelected.value;
-    selectSection.add(option);
+    // var selectSection = document.querySelector('#filterSelect');
+    // var option = document.createElement("option");
+    // option.text = plusElementSelected.value;
+    // option.value = plusElementSelected.value;
+    // selectSection.add(option);
     plusElementSelected.remove(plusElementSelected.selectedIndex);
 }
 
 function removeMinusElement() {
     var minusElementSelected = document.querySelector('#minus-select');
     if(minusElementSelected.value == "") return;
-    var selectSection = document.querySelector('#filterSelect');
-    var option = document.createElement("option");
-    option.text = minusElementSelected.value;
-    option.value = minusElementSelected.value;
-    selectSection.add(option);
+    // var selectSection = document.querySelector('#filterSelect');
+    // var option = document.createElement("option");
+    // option.text = minusElementSelected.value;
+    // option.value = minusElementSelected.value;
+    // selectSection.add(option);
     minusElementSelected.remove(minusElementSelected.selectedIndex);
 }
 
