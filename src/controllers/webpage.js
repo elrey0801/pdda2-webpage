@@ -7,6 +7,11 @@ const WebPageController = {
     getDataPage: async (req, res) => {
         let username = await req.user;
         res.render('./op-data/data.ejs', { username: username[0].name });
+    },
+
+    getCreateWorkingGroupPage: async (req, res) => {
+        let username = await req.user;
+        res.render('./ptvh/create-working-group.ejs', { username: username[0].name });
     }
 }
 

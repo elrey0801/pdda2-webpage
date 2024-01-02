@@ -1,0 +1,142 @@
+<%- include('../includes/head.ejs') %>
+</head>
+
+<body>
+    <%- include('../includes/navigation.ejs', {username: username}) %>
+    <div class="container-fluid">
+        <div class="row my-3 justify-content-center align-items-center">
+            <div class="col-lg-5 d-flex justify-content-center align-items-center">
+                <h4><b>TẠO NHÓM CÔNG TÁC</b></h4>
+            </div>
+        </div>
+        <div class="row my-3 justify-content-center align-items-center">
+            <div class="col-lg-5 d-flex justify-content-center align-items-center">
+                <div class="input-group">
+                    <span class="input-group-text" id="schedule-start">Bắt đầu</span>
+                    <input type="datetime-local" class="form-control" placeholder="Schedule Start">
+                    <span class="input-group-text" id="schedule-finish">Kết thúc</span>
+                    <input type="datetime-local" class="form-control" placeholder="Schedule Finish">
+                </div>
+            </div>
+        </div>
+
+        <div class="row my-3 justify-content-center align-items-center">
+            <div class="col-lg-5 d-flex justify-content-center align-items-center">
+                <div class="input-group">
+                    <span class="input-group-text" id="crew">Đơn vị</span>
+                    <input type="text" class="form-control" placeholder="B03, B04, PC,...">
+                </div>
+            </div>
+        </div>
+
+        <div class="row my-3 justify-content-center align-items-center">
+          <div class="col-lg-5 d-flex justify-content-center align-items-center">
+              <div class="input-group">
+                  <span class="input-group-text" id="station">Trạm</span>
+                  <input type="text" class="form-control" placeholder="Trạm">
+              </div>
+          </div>
+        </div>
+
+        <div class="row my-3 justify-content-center align-items-center">
+          <div class="col-lg-5 d-flex justify-content-center align-items-center">
+              <div class="input-group">
+                  <span class="input-group-text" id="content">Nội dung</span>
+                  <textarea class="form-control"></textarea>
+              </div>
+            </div>
+        </div>
+        
+        <div class="row my-3 justify-content-center align-items-center">
+          <div class="col-lg-5 d-flex justify-content-center align-items-center">
+              <div class="input-group">
+                  <span class="input-group-text" id="ptt">PTT</span>
+                  <input type="text" class="form-control" placeholder="PTT">
+              </div>
+          </div>
+        </div>
+
+        <div class="row my-3 justify-content-center align-items-center">
+          <div class="col-lg-2 d-flex justify-content-center align-items-center">
+            <div class="btn-group" role="edit-delete-btn">         
+              <button type="button" class="btn btn-success">Create</button>
+              <button type="button" class="btn btn-secondary">Clear</button>
+            </div>
+          </div>
+        </div>
+        
+    </div>
+
+    <hr>
+
+    <table id="productSizes" class="table table-hover table-striped table-bordered">
+      <thead>
+          <tr class="d-flex">
+              <th class="col-1 d-flex justify-content-center align-items-center">Bắt đầu</th>
+              <th class="col-1 d-flex justify-content-center align-items-center">Kết thúc</th>
+              <th class="col-1 d-flex justify-content-center align-items-center">Đơn vị</th>
+              <th class="col-1 d-flex justify-content-center align-items-center">Trạm</th>
+              <th class="col-6 d-flex justify-content-center align-items-center">Nội dung</th>
+              <th class="col-1 d-flex justify-content-center align-items-center">PTT</th>
+              <th class="col-1 d-flex justify-content-center align-items-center">Edit/Delete</th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr class="d-flex">
+              <td class="col-1 d-flex justify-content-center align-items-center">15:00 22-10-2024</td>
+              <td class="col-1 d-flex justify-content-center align-items-center">16:00 22-10-2024</td>
+              <td class="col-1 d-flex justify-content-center align-items-center">61 - 6361 - 6361 - 6361 - 63</td>
+              <td class="col-1 d-flex justify-content-center align-items-center">89 - 91</td>
+              <td class="col-6 d-flex justify-content-center align-items-center">61 - 63</td>
+              <td class="col-1 d-flex justify-content-center align-items-center">89 - 91</td>
+              <td class="col-1 d-flex justify-content-center align-items-center">
+                <div class="btn-group" role="edit-delete-btn">         
+                  <button type="button" class="btn btn-primary">Sửa</button>
+                  <button type="button" class="btn btn-danger">Xóa</button>
+                </div>
+              </td>
+          </tr>
+      </tbody>
+  </table>
+</body>
+
+<%- include('../includes/end.ejs') %>
+
+
+
+
+<!-- <div class="input-group mb-3">
+    <span class="input-group-text" id="basic-addon1">@</span>
+    <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+  </div>
+  
+  <div class="input-group mb-3">
+    <input type="text" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="basic-addon2">
+    <span class="input-group-text" id="basic-addon2">@example.com</span>
+  </div>
+  
+  <div class="mb-3">
+    <label for="basic-url" class="form-label">Your vanity URL</label>
+    <div class="input-group">
+      <span class="input-group-text" id="basic-addon3">https://example.com/users/</span>
+      <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3 basic-addon4">
+    </div>
+    <div class="form-text" id="basic-addon4">Example help text goes outside the input group.</div>
+  </div>
+  
+  <div class="input-group mb-3">
+    <span class="input-group-text">$</span>
+    <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
+    <span class="input-group-text">.00</span>
+  </div>
+  
+  <div class="input-group mb-3">
+    <input type="text" class="form-control" placeholder="Username" aria-label="Username">
+    <span class="input-group-text">@</span>
+    <input type="text" class="form-control" placeholder="Server" aria-label="Server">
+  </div>
+  
+  <div class="input-group">
+    <span class="input-group-text">With textarea</span>
+    <textarea class="form-control" aria-label="With textarea"></textarea>
+  </div> -->
