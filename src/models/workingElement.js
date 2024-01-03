@@ -37,6 +37,14 @@ const workingElementSchema = new Schema({
     actualFinish: {
         type: Date,
         default: null
+    },
+    creator: {
+        type: String,
+        required: true
+    },
+    groupId: {
+        type: String,
+        required: true
     }
 });
 

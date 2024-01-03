@@ -11,7 +11,10 @@ const WebPageController = {
 
     getCreateWorkingGroupPage: async (req, res) => {
         let username = await req.user;
-        res.render('./ptvh/create-working-group.ejs', { username: username[0].name });
+        var currentTime = new Date();
+        res.render('./ptvh/create-working-group.ejs', { 
+            username: username[0].name, 
+            group_id: username[0].name +  currentTime.valueOf()});
     }
 }
 
