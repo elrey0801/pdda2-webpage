@@ -1,18 +1,18 @@
 import WorkingElement from "../models/workingElement.js";
 
 const WorkingElementService = {
-    addWorkingGroup: async (workingGroupData, req, res) => {
+    addWorkingElement: async (workingElementData, req, res) => {
         try {
-            console.log(workingGroupData);
-            var newData = new WorkingElement(workingGroupData);
+            console.log(workingElementData);
+            var newData = new WorkingElement(workingElementData);
 
             await newData.save();
             return res.status(200).json({
-                message: 'Added',
+                message: 'Added new working element',
             })
         } catch(err) {
             return res.status(400).json({
-                message: 'Failed',
+                message: 'Failed to add new working element',
                 error: err
             })
         }

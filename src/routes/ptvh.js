@@ -1,14 +1,11 @@
 import express from 'express';
 
 import AuthController from '../controllers/auth.js';
-import OPDataController from '../controllers/opData.js';
+import WorkingElementController from '../controllers/workingElement.js'
 
 
 const router = express.Router();
 
-// router.post('/post-op-data', AuthController.checkAPIToken, OPDataController.postOpData);
-router.post('/get-op-data', AuthController.checkAPIAuthenticated, OPDataController.getOpData);
-router.post('/get-element-list', AuthController.checkAPIAuthenticated, OPDataController.getElementList);
-// router.get('/post-json', OPDataController.addJSON);
+router.post('/create-working-element', WorkingElementController.createWorkingElement);
 
 export default router; 
