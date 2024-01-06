@@ -27,6 +27,15 @@ const WorkingElementController = {
             groupId: 'kkkk'
         };
         WorkingElementService.addWorkingElement(packedData, req, res);
+    },
+
+    getWorkingElements: async (req, res) => {
+        var response = await fetch('http://127.0.0.1:8080/get-working-elements');
+        response = await response.json();
+        return res.status(200).json({
+            message: 'ok',
+            data: response
+        })
     }
 }
 

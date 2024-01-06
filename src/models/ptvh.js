@@ -11,9 +11,9 @@ const ptvhSchema = new Schema({
     default: false,
   },
   note: [{
-      type: String,
-      default: null
-    }]
+    type: String,
+    default: null
+  }]
 });
 
 let PTVH = mongoose.model('PTVH', ptvhSchema);
